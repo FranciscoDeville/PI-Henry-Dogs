@@ -33,7 +33,6 @@ router.post("/dogs", async (req, res, next) => {
         weight_max,
         life_span_min,
         life_span_max,
-        temperament,
         image,
       });
       for (let i = 0; i < temperament.length; i++) {
@@ -42,7 +41,7 @@ router.post("/dogs", async (req, res, next) => {
         })
         dogCreate.addTemperament(temp)
       }
-      res.status(200).json(dogCreate);
+      res.status(200).json('Successfully created dog');
     } catch (error) {
       next(error);
     }

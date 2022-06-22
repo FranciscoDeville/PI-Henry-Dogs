@@ -10,13 +10,12 @@ const getApiInfo = async () => {
     return {
       id: e.id,
       name: e.name,
-      height: e.height.metric, //Altura
-      weight: e.weight.metric,
+      height_imperial: e.height.imperial,
+      weight_imperial: e.weight.imperial,
+      height_metric: e.height.metric, //Altura
+      weight_metric: e.weight.metric,
       life_span: e.life_span,
-      breed_group: e.breed_group,
-      bred_for: e.bred_for,
       temperament: e.temperament,
-      origin: e.origin,
       image: e.image.url,
     };
   });
@@ -36,8 +35,32 @@ const getDbInfo = async () => {
 };
 
 const getAllInfo = async () => {
-  const [apiInfo2, dbinfo2] = Promise.all([getApiInfo(), getDbInfo()]);
-  return [...apiInfo2, ...dbinfo2];
+  const apiInfo2 = await getApiInfo();
+  const dbInfo2 = await getDbInfo();
+  const allInfo = [...apiInfo2, ...dbInfo2];
+  return allInfo;
 };
 
-module.exports = { getApiInfo, getDbInfo, getAllInfo };
+const createTemperament = async () => {
+  const apiUrl = await axios.get(
+    `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`
+  );
+  const temperament = await apiUrl.data.map((e) => {
+    if (e.temperament !== null) {
+      return e.temperament;
+    }
+  });
+
+  let temp1 = temperament.join();
+  let temp2 = temp1.replace(/ /g, "");
+  let temp3 = temp2.split(",");
+  let temp4 = new Set(temp3);
+  let temp5 = [...temp4];
+  let temp6 = temp5.filter((t) => t !== "" && t !== null);
+  let temperaments = temp6.map((e) => {
+    return { name: e };
+  });
+  await Temperament.bulkCreate(temperaments);
+};
+
+module.exports = { getApiInfo, getDbInfo, getAllInfo, createTemperament };

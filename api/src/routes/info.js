@@ -46,9 +46,9 @@ const createTemperament = async () => {
     `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`
   );
   const temperament = await apiUrl.data.map((e) => {
-    if (e.temperament !== null) {
+    //if (e.temperament !== null) {
       return e.temperament;
-    }
+    //}
   });
 
   let temp1 = temperament.join();
@@ -57,10 +57,17 @@ const createTemperament = async () => {
   let temp4 = new Set(temp3);
   let temp5 = [...temp4];
   let temp6 = temp5.filter((t) => t !== "" && t !== null);
-  let temperaments = temp6.map((e) => {
+  temp6.forEach((e) => {
+    Temperament.findOrCreate({
+      where: { name: e },
+    });
+  });
+  const allTemperaments = await Temperament.findAll();
+  return allTemperaments;
+};
+  /* let temperaments = temp6.map((e) => {
     return { name: e };
   });
-  await Temperament.bulkCreate(temperaments);
-};
+  await Temperament.bulkCreate(temperaments); */
 
 module.exports = { getApiInfo, getDbInfo, getAllInfo, createTemperament };

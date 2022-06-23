@@ -23,9 +23,10 @@ router.post("/dogs", async (req, res, next) => {
         life_span_max,
         temperament,
         image,
+        createdInDb,
       } = req.body;
   
-      const dogCreate = await Dog.create({
+      const dogCreated = await Dog.create({
         name,
         height_min,
         height_max,
@@ -34,14 +35,17 @@ router.post("/dogs", async (req, res, next) => {
         life_span_min,
         life_span_max,
         image,
+        createdInDb,
       });
-      for (let i = 0; i < temperament.length; i++) {
+      let temperamentDb = await Temperament.findAll({where: {name: temperament}})
+      dogCreated.addTemperament(temperamentDb)
+      /* for (let i = 0; i < temperament.length; i++) {
         const temp = await Temperament.findOne({
             where: {name: temperament[i]}
         })
         dogCreate.addTemperament(temp)
-      }
-      res.status(200).json('Successfully created dog');
+      } */
+      res.status(200).json('Dog created successfully');
     } catch (error) {
       next(error);
     }

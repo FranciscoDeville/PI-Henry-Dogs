@@ -22,9 +22,10 @@ const { conn } = require("./src/db.js");
 const { createTemperament } = require("./src/routes/info.js");
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
     createTemperament();
     console.log("Listening at 3001"); // eslint-disable-line no-console
   });
 });
+

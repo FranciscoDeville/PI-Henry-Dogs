@@ -1,0 +1,16 @@
+.paginado {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.paginado li {display: inline;}
+
+.paginado li a {
+    color: black;
+    float: left;
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+.paginado li a:hover:not(.active) {background-color: #ddd;}

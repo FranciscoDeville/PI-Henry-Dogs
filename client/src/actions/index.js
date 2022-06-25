@@ -9,3 +9,31 @@ export function getDogs() {
     });
   };
 }
+
+export function filterDogsByTemperaments(payload){
+  return {
+    type: 'FILTER_BY_TEMPERAMENTS',
+    payload
+  }
+}
+
+export function filter_Created(payload){
+  return{
+    type: 'FILTER_CREATED',
+    payload
+  }
+}
+
+export function orderByName(payload){
+  return{
+    type: 'ORDER_BY_NAME',
+    payload
+  }
+}
+
+export function orderByWeight(payload){
+  return{
+    type: 'ORDER_BY_WEIGHT',
+    payload
+  }
+}

@@ -1,21 +1,31 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs, filter_Created, orderByName, orderByWeight } from "../actions";
+import {
+  getDogs,
+  getTemperaments,
+  filter_Created,
+  orderByName,
+  orderByWeight,
+  filterByTemperaments,
+} from "../actions";
 import Card from "./Card";
 import { Link } from "react-router-dom";
 import Paginado from "./Paginado";
+import SearchBar from "./SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs);
+  const allTemperaments = useSelector((state) => state.temperaments);
+
   const [currentPage, setCurrentPage] = useState(1); // Numero de pagina actual
   const [dogsPerPage, setDogsPerPage] = useState(8); // Numero de perros por pagina
   const indexOfLastDog = currentPage * dogsPerPage; // Index del ultimo dog (Inicia en 8)
   const indexOfFirstDog = indexOfLastDog - dogsPerPage; // 0
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog); // Divido el array en 8 perros
 
-  const [orden, setOrden] = useState("");
+  const [order, setOrder] = useState("");
 
   const paginado = (pageNumber) => {
     //Seteo la pagina en el numero que quiero ir
@@ -24,6 +34,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getDogs());
+    dispatch(getTemperaments());
   }, [dispatch]);
 
   function handleClick(e) {
@@ -32,20 +43,38 @@ export default function Home() {
   }
 
   function handleFilterCreated(e) {
+    e.preventDefault(e);
     dispatch(filter_Created(e.target.value));
+    setCurrentPage(1);
+    setOrder(e.target.value);
   }
 
   function handleOrderByName(e) {
     e.preventDefault();
     dispatch(orderByName(e.target.value));
     setCurrentPage(1);
-    setOrden(`Ordenado ${e.target.value}`)
+    setOrder(e.target.value);
+  }
+
+  function handleOrderByWeight(e) {
+    e.preventDefault();
+    dispatch(orderByWeight(e.target.value));
+    setCurrentPage(1);
+    setOrder(e.target.value);
+  }
+
+  function handleFilterByTemperament(e) {
+    e.preventDefault(e);
+    dispatch(filterByTemperaments(e.target.value));
+    setCurrentPage(1);
+    setOrder(e.target.value);
   }
 
   return (
     <div>
-      <Link to="/dogs">Create dog</Link>
+      <Link to="/create_dog">Create dog</Link>
       <h1>Aguante los perritos</h1>
+      <SearchBar />
       <button
         onClick={(e) => {
           handleClick(e);
@@ -55,18 +84,38 @@ export default function Home() {
       </button>
       <div>
         <select onChange={(e) => handleOrderByName(e)}>
-          <option value="name_asc">Nombre Ascendente</option>
-          <option value="name_desc">Nombre Descendente</option>
+          <option selected disabled hidden>
+            Alphabetical order
+          </option>
+          <option value="name_asc">A - Z</option>
+          <option value="name_desc">Z - A</option>
         </select>
-        <select>
-          <option value="peso_asc">Peso Ascendente</option>
-          <option value="peso_desc">Peso Descendente</option>
+        <select onChange={(e) => handleOrderByWeight(e)}>
+          <option selected disabled hidden>
+            Order by weight
+          </option>
+          <option value="weight_asc">Heavier</option>
+          <option value="weight_desc">Lighter</option>
         </select>
         <select onChange={(e) => handleFilterCreated(e)}>
-          <option value="all">Todos los perros</option>
-          <option value="created">Creados</option>
-          <option value="api">Existente</option>
+          <option selected disabled hidden>
+            Filter by create
+          </option>
+          <option value="all">All</option>
+          <option value="created">Created</option>
+          <option value="api">Api</option>
         </select>
+        <select onChange={(e) => handleFilterByTemperament(e)}>
+          <option selected disabled hidden>
+              Filter by temperament
+            </option>
+            <option value="all">All</option>
+            {allTemperaments.map((temp) => (
+              <option key={temp.id} value={temp.name}>
+                {temp.name}
+              </option>
+            ))}
+          </select>
 
         <Paginado //Paso las props al paginado
           dogsPerPage={dogsPerPage}
@@ -81,7 +130,8 @@ export default function Home() {
                 <Card
                   name={el.name}
                   temperament={el.temperament}
-                  weight={el.height_metric}
+                  weight_min={el.weight_min}
+                  weight_max={el.weight_max}
                   image={el.image}
                   key={el.id}
                 />

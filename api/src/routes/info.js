@@ -8,14 +8,23 @@ const getApiInfo = async () => {
   );
   const apiInfo = await apiUrl.data.map((e) => {
     return {
-      id: e.id,
       name: e.name,
-      height_imperial: e.height.imperial,
-      weight_imperial: e.weight.imperial,
-      height_metric: e.height.metric, //Altura
-      weight_metric: e.weight.metric,
-      life_span: e.life_span,
-      temperament: e.temperament,
+      id: e.id,
+      height_min:
+        e.height.metric.split(" - ")[0] && e.height.metric.split(" - ")[0],
+      height_max:
+        e.height.metric.split(" - ")[1] && e.height.metric.split(" - ")[1],
+      weight_min:
+        e.weight.metric.split(" - ")[0] !== "NaN"
+          ? e.weight.metric.split(" - ")[0]
+          : 6,
+      weight_max:
+        e.weight.metric.split(" - ")[1] && e.weight.metric.split(" - ")[1],
+      life_time_min: e.life_span.split(" - ")[0] && e.life_span.split(" - ")[0],
+      life_time_max:
+        e.life_span.split(" - ")[1] &&
+        e.life_span.split(" - ")[1].split(" ")[0],
+      temperament: e.temperament ? e.temperament : "Unknown",
       image: e.image.url,
     };
   });
@@ -23,15 +32,38 @@ const getApiInfo = async () => {
 };
 
 const getDbInfo = async () => {
-  return await Dog.findAll({
-    include: {
-      model: Temperament,
-      attributes: ["name"],
-      through: {
-        attributes: [],
-      },
-    },
-  });
+  try {
+    const dogs = await Dog.findAll({
+      include: Temperament,
+    });
+
+    const info = dogs.map((e) => {
+      let temp = e.temperaments.map((e) => e.name);
+      let temp2 = temp.join(", ");
+
+      return {
+        name: e.name,
+        id: e.id,
+        height_max: e.height_max,
+        height_min: e.height_min,
+
+        weight_max: e.weight_max,
+        weight_min: e.weight_min,
+
+        life_time_max: e.life_time_max,
+        life_time_min: e.life_time_min,
+
+        temperament: temp2,
+        image: e.image
+          ? e.image
+          : "https://i0.wp.com/imagenesparapeques.com/wp-content/uploads/2017/08/Personajes-Puppy-Dogs-Palls.png?w=300&ssl=1",
+        createdInDb: e.createdInDb,
+      };
+    });
+    return info;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllInfo = async () => {
@@ -45,19 +77,13 @@ const createTemperament = async () => {
   const apiUrl = await axios.get(
     `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`
   );
-  const temperament = await apiUrl.data.map((e) => {
-    //if (e.temperament !== null) {
-      return e.temperament;
-    //}
-  });
+  var temperaments = await apiUrl.data.map((e) => e.temperament); //mapeo los temperamentos
 
-  let temp1 = temperament.join();
-  let temp2 = temp1.replace(/ /g, "");
-  let temp3 = temp2.split(",");
-  let temp4 = new Set(temp3);
-  let temp5 = [...temp4];
-  let temp6 = temp5.filter((t) => t !== "" && t !== null);
-  temp6.forEach((e) => {
+  temperaments = temperaments.join(", ").split(", "); //Junto el array en string y los separo
+  temperaments = [...new Set(temperaments)].sort(); //Quitamos duplicados
+  temperaments = temperaments.filter((el) => el); //Quitamos los vacios
+
+  temperaments.forEach((e) => {
     Temperament.findOrCreate({
       where: { name: e },
     });
@@ -65,7 +91,7 @@ const createTemperament = async () => {
   const allTemperaments = await Temperament.findAll();
   return allTemperaments;
 };
-  /* let temperaments = temp6.map((e) => {
+/* let temperaments = temp6.map((e) => {
     return { name: e };
   });
   await Temperament.bulkCreate(temperaments); */

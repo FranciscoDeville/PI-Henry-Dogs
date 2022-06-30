@@ -11,7 +11,7 @@ const router = Router();
 router.use("/dogs", dogsRoutes);
 router.use("/temperaments", temperamentsRoutes);
 
-router.post("/dogs", async (req, res, next) => {
+router.post("/post", async (req, res, next) => {
     try {
       const {
         name,
@@ -34,6 +34,7 @@ router.post("/dogs", async (req, res, next) => {
         weight_max,
         life_span_min,
         life_span_max,
+        temperament,
         image,
         createdInDb,
       });
@@ -45,7 +46,7 @@ router.post("/dogs", async (req, res, next) => {
         })
         dogCreate.addTemperament(temp)
       } */
-      res.status(200).json('Dog created successfully');
+      res.status(200).json(dogCreated);
     } catch (error) {
       next(error);
     }

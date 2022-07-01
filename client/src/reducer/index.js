@@ -1,5 +1,6 @@
 const initialState = {
   allDogs: [],
+  detail: [],
   dogs: [],
   temperaments: [],
 };
@@ -12,16 +13,18 @@ function rootReducer(state = initialState, action) {
         dogs: action.payload,
         allDogs: action.payload,
       };
-    case 'FILTER_BY_TEMPERAMENTS':
+    case "FILTER_BY_TEMPERAMENTS":
       let all_Dogs = state.allDogs;
-      const filterByTemperaments = action.payload === "all" ?
-      all_Dogs : all_Dogs.filter(el => {
-          return el.temperament?.split(", ").includes(action.payload)
-      })
+      const filterByTemperaments =
+        action.payload === "all"
+          ? all_Dogs
+          : all_Dogs.filter((el) => {
+              return el.temperament?.split(", ").includes(action.payload);
+            });
       return {
-          ...state,
-          dogs: filterByTemperaments
-      }
+        ...state,
+        dogs: filterByTemperaments,
+      };
     case "GET_TEMPERAMENTS":
       return {
         ...state,
@@ -56,6 +59,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: dogsOrderName,
       };
+    case "GET_DETAILS":
+      return {
+        ...state,
+        detail: action.payload,
+      };
+    case "GET_CLEAN":
+      return{
+        ...state,
+        detail: action.payload,
+      }
     case "ORDER_BY_WEIGHT":
       let dogsOrderWeight =
         action.payload === "weight_asc"

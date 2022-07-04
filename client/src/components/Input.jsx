@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Input,
-  Label,
-  GroupInput,
-  ReadingError,
-} from "./../elements/Forms";
-
-
+import { Input, Label, GroupInput, ReadingError } from "../styles/FormsStyles";
 
 export default function ComponentInput({
   state,
@@ -17,13 +10,13 @@ export default function ComponentInput({
   name,
   errormessage,
   regularPhrase,
-  //func,
 }) {
-  const onChange = (e) => {
+  
+  function handleOnChange(e) {
     setState({ ...state, field: e.target.value });
-  };
+  }
 
-  const validation = () => {
+  function handleValidation() {
     if (regularPhrase) {
       if (regularPhrase.test(state.field)) {
         setState({ ...state, valid: "true" });
@@ -31,11 +24,7 @@ export default function ComponentInput({
         setState({ ...state, valid: "false" });
       }
     }
-
-    /* if (func) {
-      func();
-    } */
-  };
+  }
 
   return (
     <div>
@@ -48,9 +37,9 @@ export default function ComponentInput({
           placeholder={placeholder}
           id={name}
           value={state.field}
-          onChange={onChange}
-          onKeyUp={validation} //Ejecuta la funcion al soltar la tecla
-          onBlur={validation} //Ejecuta la funcion al hacer clic por fuera del input
+          onChange={handleOnChange}
+          onKeyUp={handleValidation} //Ejecuta la funcion al soltar la tecla
+          onBlur={handleValidation} //Ejecuta la funcion al hacer clic por fuera del input
           valid={state.valid} //Accedo al estado para saber si es true o false (estilos)
         />
       </GroupInput>
@@ -59,4 +48,3 @@ export default function ComponentInput({
   );
 }
 
-/* export default ComponentInput; */

@@ -4,6 +4,7 @@ const colors = {
   border: "#0075FF",
   error: "#bb2929",
   success: "#1ed12d",
+  backgroundInput: "#fff",
 };
 
 const Form = styled.form`
@@ -35,7 +36,7 @@ const GroupInput = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background: #fff;
+  background: ${colors.backgroundInput};
   border-radius: 3px;
   height: 45px;
   line-height: 45px;
@@ -113,7 +114,7 @@ const ErrorMessage = styled.div`
   background: #f66060;
   padding: 0px 15px;
   border-radius: 3px;
-  
+
   p {
     margin: 0;
   }
@@ -123,6 +124,59 @@ const ErrorMessage = styled.div`
 
   @media (min-width: 800px) {
     grid-column: span 2;
+  }
+`;
+
+const ContainerTemperaments = styled.div`
+  grid-column: span 2;
+  input {
+    margin-right: 10px;
+  }
+  @media (max-width: 800px) {
+    grid-column: span 1;
+  }
+`;
+
+const ImageDog = styled.img`
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 250px;
+
+  &:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+`;
+
+const Select = styled.select`
+  width: 90%;
+  padding: 12px 20px;
+  margin: 20px 0 0 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const Ul = styled.ul`
+  list-style: none;
+`;
+
+const ButtonTemperaments = styled.button`
+  width: 30%;
+  background-color: rgb(18, 137, 153);
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  margin-right: 7%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(2, 80, 80);
+    transform: scale(1.1);
+    cursor: pointer;
   }
 `;
 
@@ -136,4 +190,9 @@ export {
   Button,
   SuccessMessage,
   ErrorMessage,
+  ContainerTemperaments,
+  ImageDog,
+  Select,
+  Ul,
+  ButtonTemperaments,
 };

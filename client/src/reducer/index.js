@@ -25,6 +25,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: filterByTemperaments,
       };
+    case 'GET_NAME_DOG':
+      return {
+        ...state,
+        dogs: action.payload
+      }
     case "GET_TEMPERAMENTS":
       return {
         ...state,

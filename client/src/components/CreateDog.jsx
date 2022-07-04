@@ -3,10 +3,21 @@ import { Link, useHistory } from "react-router-dom";
 import { postDog, getTemperaments } from "../actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
-
-import { Form, Label, ErrorMessage, CenteredButtonContainer, Button, SuccessMessage, ReadingError } from "../elements/Forms";
+import {
+  Form,
+  Label,
+  ErrorMessage,
+  CenteredButtonContainer,
+  Button,
+  SuccessMessage,
+  ImageDog,
+  ReadingError,
+  Ul,
+  ButtonTemperaments,
+  Select,
+} from "../styles/FormsStyles";
 import Input from "./Input";
-import '../styles/CreatedDogStyles.css'
+
 
 export default function CreateDog() {
   //------------------------------------------------------------------------------------------------------------------------
@@ -14,19 +25,8 @@ export default function CreateDog() {
   const history = useHistory();
   const temperaments = useSelector((state) => state.temperaments);
 
-  const [input, setInput] = useState({
-    name: "",
-    height_min: "",
-    height_max: "",
-    weight_min: "",
-    weight_max: "",
-    life_span_min: "",
-    life_span_max: "",
-    image: "",
-    temperament: [],
-  });
-
   const [name, setName] = useState({ field: "", valid: null });
+  const [image, setImage] = useState({ field: "", valid: null });
   const [height_min, setHeight_min] = useState({ field: "", valid: null });
   const [height_max, setHeight_max] = useState({ field: "", valid: null });
   const [weight_min, setWeight_min] = useState({ field: "", valid: null });
@@ -39,58 +39,88 @@ export default function CreateDog() {
     field: "",
     valid: null,
   });
+  const [temperament, setTemperament] = useState({ field: [] });
 
   const [formValid, setFormValid] = useState(null);
 
   const expressions = {
     name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-    number: /^\d{1,2}$/, // 1 a 2 numeros.
+    number: /^[1-9]$|^[1-9][0-9]$|^(100)$/, // 1 al 100 numeros.
     url: /^(ftp|http|https):\/\/[^ "]+$/, // Valida una url
   };
+
+  useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
 
   function handleSubmit(e) {
     e.preventDefault();
     // Valido que esten todos los campos correctos
     if (
-      name.valid === "true" &&
-      height_min.valid === "true" &&
-      height_max.valid === "true" &&
-      weight_min.valid === "true" &&
-      weight_max.valid === "true" &&
-      life_span_min.valid === "true" &&
-      life_span_max.valid === "true" /* &&
-			terminos */
+      height_max.field > height_min.field &&
+      weight_max.field > weight_min.field &&
+      life_span_max.field > life_span_min.field &&
+      temperament.field.length > 0
     ) {
-      dispatch(postDog(input));
+      if (
+        name.valid === "true" &&
+        height_min.valid === "true" &&
+        height_max.valid === "true" &&
+        weight_min.valid === "true" &&
+        weight_max.valid === "true" &&
+        life_span_min.valid === "true" &&
+        life_span_max.valid === "true"
+      ) {
+        setFormValid("true");
+        let newDog = {
+          name: name.field,
+          image: image.field,
+          height_min: height_min.field,
+          height_max: height_max.field,
+          weight_min: weight_min.field,
+          weight_max: weight_max.field,
+          life_span_min: life_span_min.field,
+          life_span_max: life_span_max.field,
+          temperament: temperament.field,
+        };
+        dispatch(postDog(newDog));
 
-      // Vacio los campos
-      setFormValid(true);
-      setName({ field: "", valid: null });
-      setHeight_min({ field: "", valid: null });
-      setHeight_max({ field: "", valid: null });
-      setWeight_min({ field: "", valid: null });
-      setWeight_max({ field: "", valid: null });
-      setLife_span_min({ field: "", valid: null });
-      setLife_span_max({ field: "", valid: null });
+        // Vacio los campos
+        setName({ field: "", valid: null });
+        setImage({ field: "", valid: null });
+        setHeight_min({ field: "", valid: null });
+        setHeight_max({ field: "", valid: null });
+        setWeight_min({ field: "", valid: null });
+        setWeight_max({ field: "", valid: null });
+        setLife_span_min({ field: "", valid: null });
+        setLife_span_max({ field: "", valid: null });
+        setTemperament({ field: [] });
 
-      alert("Dog created successfully!");
-      //history.push("/home");
+        alert("Dog created successfully!");
+        history.push("/home");
+      }
       // ...
     } else {
-      setFormValid(false);
+      setFormValid("false");
     }
   }
-  
+
+  function handleSelect(e) {
+    setTemperament({
+      field: [...temperament.field, e.target.value],
+    });
+  }
 
   function handleDelete(el) {
-    setInput({
-      ...input,
-      temperament: input.temperament.filter((e) => e !== el),
+    setTemperament({
+      ...temperament,
+      field: temperament.field.filter((e) => e !== el),
     });
   }
 
   return (
     <main>
+      <ImageDog src={image.field} alt=""/>
       <Form action="" onSubmit={handleSubmit}>
         <Input
           state={name}
@@ -101,6 +131,16 @@ export default function CreateDog() {
           name="name"
           errormessage="The breed name can only contain letters and spaces."
           regularPhrase={expressions.name}
+        />
+        <Input
+          state={image}
+          setState={setImage}
+          type="url"
+          label="Image URL"
+          placeholder="Image URL..."
+          name="image"
+          errormessage="It has to be a valid URL."
+          regularPhrase={expressions.url}
         />
         <Input
           state={height_min}
@@ -160,23 +200,38 @@ export default function CreateDog() {
           placeholder="Maximum life expectancy(years)..."
           name="life_span_max"
           errormessage="The maximum life expectancy can only contain one or two digits and must be less than the minimum life expectancy."
-          regularPhrase={expressions.name}
+          regularPhrase={expressions.number}
         />
-        {/* <Input
-          type="text"
-          label="image"
-          placeholder="Image url..."
-          name="image"
-          regularPhrase={expressions.url}
-        /> */}
+        <div>
+          <Label>Temperaments:</Label>
+          <Ul>
+            <li key={"key"}>
+              {temperament.field.map((el) => (
+                <ButtonTemperaments
+                  type="button"
+                  key={el.id}
+                  onClick={() => handleDelete(el)}
+                >
+                  {el}
+                </ButtonTemperaments>
+              ))}
+            </li>
+          </Ul>
+        </div>
+        <div>
+          <Select onChange={(e) => handleSelect(e)}>
+            {temperaments.map((temperament) => (
+              <option value={temperament.name} key={temperament.id}>
+                {temperament.name}
+              </option>
+            ))}
+          </Select>
+        </div>
 
         {/* <div>
-          <Label>
-            Temperaments:
-          </Label>
-          <ul>
-            <li key={"temperaments"}>
-              {input.temperament.map((el) => (
+          <p>Temperaments:</p>
+            <ol>
+              {temperament.field.map((el) => (
                 <button
                   type="button"
                   key={el.id}
@@ -185,11 +240,17 @@ export default function CreateDog() {
                   {el}
                 </button>
               ))}
-            </li>
-          </ul>
-
+            </ol>
+          <select onChange={(e) => handleSelect(e)}>
+            {temperaments.map((temp) => (
+              <option key={temp.id} value={temp.name}>
+                {temp.name}
+              </option>
+            ))}
+          </select>
         </div> */}
-        {formValid === false && (
+
+        {formValid === "false" && (
           <ErrorMessage>
             <p>
               <b>Error:</b> Please fill in the form correctly.
@@ -198,7 +259,7 @@ export default function CreateDog() {
         )}
         <CenteredButtonContainer>
           <Button type="submit">Send</Button>
-          {formValid === true && (
+          {formValid === "true" && (
             <SuccessMessage>Formulario enviado exitosamente!</SuccessMessage>
           )}
         </CenteredButtonContainer>

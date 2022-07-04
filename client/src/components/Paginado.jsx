@@ -11,7 +11,7 @@ export default function Paginado({ dogsPerPage, allDogs, paginado }) {
   return (
     //Renderizo el paginado
     <nav>
-      <ul className={style.paginado}>
+      <ul className={style.pagination}>
         {pageNumbers &&
           pageNumbers.map((number) => (
             <li key={number} >

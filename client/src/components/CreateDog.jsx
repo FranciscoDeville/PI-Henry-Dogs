@@ -15,8 +15,12 @@ import {
   Ul,
   ButtonTemperaments,
   Select,
+  ButtonInicio,
+  DivInicio,
 } from "../styles/FormsStyles";
 import Input from "./Input";
+import NavBar from "./NavBar";
+import ImageDefault from '../styles/images/Bingo_and_Rolly_of_Puppy_Dog_Pals_1.jpg'
 
 
 export default function CreateDog() {
@@ -120,7 +124,12 @@ export default function CreateDog() {
 
   return (
     <main>
-      <ImageDog src={image.field} alt=""/>
+    <DivInicio>
+      <Link to='/home'>
+        <ButtonInicio >Inicio</ButtonInicio>
+      </Link>
+    </DivInicio>
+      <ImageDog src={image.field ? image.field : ImageDefault} alt=""/>
       <Form action="" onSubmit={handleSubmit}>
         <Input
           state={name}

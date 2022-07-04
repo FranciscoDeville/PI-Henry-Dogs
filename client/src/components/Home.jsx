@@ -13,6 +13,9 @@ import Card from "./Card";
 import { Link } from "react-router-dom";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import style from '../styles/Home.module.css'
+import NavBar from "./NavBar";
+import { ButtonInicio } from "../styles/FormsStyles";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -71,33 +74,37 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Link to="/create_dog">Create dog</Link>
-      <h1>Aguante los perritos</h1>
-      <SearchBar />
-      <button
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        Volver a cargar todos los personajes
-      </button>
-      <div>
-        <select onChange={(e) => handleOrderByName(e)}>
+    <div className={style.conteiner}>
+        <NavBar />
+      <div className={style.title}>
+        <h1>Aguante los perritos</h1>
+        <ButtonInicio 
+          
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
+          Volver a cargar todos los personajes
+        </ButtonInicio>
+      </div>
+      <div className={style.order}>
+        <select className={style.select} onChange={(e) => handleOrderByName(e)}>
           <option selected disabled hidden>
             Alphabetical order
           </option>
           <option value="name_asc">A - Z</option>
           <option value="name_desc">Z - A</option>
         </select>
-        <select onChange={(e) => handleOrderByWeight(e)}>
+        <select className={style.select} onChange={(e) => handleOrderByWeight(e)}>
           <option selected disabled hidden>
             Order by weight
           </option>
           <option value="weight_asc">Heavier</option>
           <option value="weight_desc">Lighter</option>
         </select>
-        <select onChange={(e) => handleFilterCreated(e)}>
+      </div>
+      <div className={style.filter}>
+        <select className={style.select} onChange={(e) => handleFilterCreated(e)}>
           <option selected disabled hidden>
             Filter by create
           </option>
@@ -105,41 +112,43 @@ export default function Home() {
           <option value="created">Created</option>
           <option value="api">Api</option>
         </select>
-        <select onChange={(e) => handleFilterByTemperament(e)}>
+        <select className={style.select} onChange={(e) => handleFilterByTemperament(e)}>
           <option selected disabled hidden>
-              Filter by temperament
+            Filter by temperament
+          </option>
+          <option value="all">All</option>
+          {allTemperaments.map((temp) => (
+            <option key={temp.id} value={temp.name}>
+              {temp.name}
             </option>
-            <option value="all">All</option>
-            {allTemperaments.map((temp) => (
-              <option key={temp.id} value={temp.name}>
-                {temp.name}
-              </option>
-            ))}
-          </select>
+          ))}
+        </select>
+      </div>
 
+      <div className={style.paginated}>
         <Paginado //Paso las props al paginado
           dogsPerPage={dogsPerPage}
           allDogs={allDogs.length}
           paginado={paginado}
         />
-
-        {currentDogs?.map((el) => {
-          return (
-            <div>
-              <Link to={"/home/" + el.id}>
-                <Card
-                  name={el.name}
-                  temperament={el.temperament}
-                  weight_min={el.weight_min}
-                  weight_max={el.weight_max}
-                  image={el.image}
-                  key={el.id}
-                />
-              </Link>
-            </div>
-          );
-        })}
       </div>
+
+      {currentDogs?.map((el) => {
+        return (
+          <div className={style.card}>
+            <Link to={"/home/" + el.id}>
+              <Card
+                name={el.name}
+                temperament={el.temperament}
+                weight_min={el.weight_min}
+                weight_max={el.weight_max}
+                image={el.image}
+                key={el.id}
+              />
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }

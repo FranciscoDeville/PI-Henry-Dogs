@@ -142,6 +142,7 @@ const ImageDog = styled.img`
   border-radius: 4px;
   padding: 5px;
   width: 250px;
+  
 
   &:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
@@ -180,6 +181,61 @@ const ButtonTemperaments = styled.button`
   }
 `;
 
+const ButtonInicio = styled.button`
+  background-color: rgb(18, 137, 153);
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  margin-right: 7%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(2, 80, 80);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+`;
+
+const ButtonNavBar = styled.button`
+  width: 100%;
+  background-color: rgb(18, 137, 153);
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  margin-right: 7%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(2, 80, 80);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+`;
+
+const DivInicio = styled.div`
+  display: flex;
+`;
+
+const InputSearchBar = styled.input`
+  width: 100%;
+  background: ${colors.backgroundInput};
+  border-radius: 3px;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 10px;
+  transition: 0.3s ease all;
+  border: 3px solid transparent;
+  &:focus {
+    border: 3px solid ${colors.border};
+    outline: none;
+    box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+  }
+`;
+
 export {
   Form,
   Label,
@@ -195,4 +251,8 @@ export {
   Select,
   Ul,
   ButtonTemperaments,
+  ButtonInicio,
+  DivInicio,
+  ButtonNavBar,
+  InputSearchBar
 };

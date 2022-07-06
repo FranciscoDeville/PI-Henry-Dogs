@@ -20,8 +20,8 @@ const getApiInfo = async () => {
           : 6,
       weight_max:
         e.weight.metric.split(" - ")[1] && e.weight.metric.split(" - ")[1],
-      life_time_min: e.life_span.split(" - ")[0] && e.life_span.split(" - ")[0],
-      life_time_max:
+      life_span_min: e.life_span.split(" - ")[0] && e.life_span.split(" - ")[0],
+      life_span_max:
         e.life_span.split(" - ")[1] &&
         e.life_span.split(" - ")[1].split(" ")[0],
       temperament: e.temperament ? e.temperament : "Unknown",
@@ -50,8 +50,8 @@ const getDbInfo = async () => {
         weight_max: e.weight_max,
         weight_min: e.weight_min,
 
-        life_time_max: e.life_time_max,
-        life_time_min: e.life_time_min,
+        life_span_max: e.life_span_max,
+        life_span_min: e.life_span_min,
 
         temperament: temp2,
         image: e.image

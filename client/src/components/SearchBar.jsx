@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameDogs } from "../actions";
-//import '../styles/'
-import style from '../styles/SearchBar.css'
+import style from "../styles/SearchBar.css";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -22,16 +21,16 @@ export default function SearchBar() {
 
   return (
     <div className={style.nav}>
-            <form className={style.form} onSubmit={handleSubmit}>
-            <input className={style.input} type='text' placeholder="Search dog..." value={name}  onChange={handleInputChange}></input>
-            <input className={style.btn} type='submit' value='Search'></input>
-            </form>
-        </div>
+      <form className={style.form} onSubmit={handleSubmit}>
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Search dog..."
+          value={name}
+          onChange={handleInputChange}
+        ></input>
+        <input className={style.btn} type="submit" value="Search"></input>
+      </form>
+    </div>
   );
 }
-{/* <div>
-  <input type="text" placeholder="Search..." onChange={handleInputChange} />
-  <button type="submit" onClick={handleSubmit}>
-    Search
-  </button>
-</div> */}

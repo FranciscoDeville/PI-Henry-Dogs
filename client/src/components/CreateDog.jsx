@@ -127,7 +127,7 @@ export default function CreateDog() {
           <ButtonInicio>Home</ButtonInicio>
         </Link>
       </DivInicio>
-      <ImageDog src={image.field ? image.field : ImageDefault} alt="" />
+      <ImageDog src={image.field ? image.field : ImageDefault} alt="Image not found" />
       <Form action="" onSubmit={handleSubmit}>
         <Input
           state={name}
@@ -140,9 +140,9 @@ export default function CreateDog() {
           regularPhrase={expressions.name}
         />
         <Input
-          state={image}
+          state={image ? image : ImageDefault}
           setState={setImage}
-          type="url"
+          type="text"
           label="Image URL"
           placeholder="Image URL..."
           name="image"
@@ -234,28 +234,6 @@ export default function CreateDog() {
             ))}
           </Select>
         </div>
-
-        {/* <div>
-          <p>Temperaments:</p>
-            <ol>
-              {temperament.field.map((el) => (
-                <button
-                  type="button"
-                  key={el.id}
-                  onClick={() => handleDelete(el)}
-                >
-                  {el}
-                </button>
-              ))}
-            </ol>
-          <select onChange={(e) => handleSelect(e)}>
-            {temperaments.map((temp) => (
-              <option key={temp.id} value={temp.name}>
-                {temp.name}
-              </option>
-            ))}
-          </select>
-        </div> */}
 
         {formValid === "false" && (
           <ErrorMessage>

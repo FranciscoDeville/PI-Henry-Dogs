@@ -1,36 +1,35 @@
 .nav {
-    margin: 30px 30px 55px 30px;
-    display: inline-block;
-    position: center;
-    height: 20px;
-    padding: 0;
+  margin: 30px 30px 55px 30px;
+  display: inline-block;
+  position: center;
+  height: 20px;
+  padding: 0;
 }
 
 .input {
-    padding: 6px 6px;
-    margin-top: 8px;
-    font-size: 20px;
-    border: none;
-    
+  padding: 6px 6px;
+  margin-top: 8px;
+  font-size: 20px;
+  border: none;
 }
 
 .input:active {
-    border: #ddd;
-    color: white;
+  border: #ddd;
+  color: white;
 }
 
 .btn {
-    float: right;
-    padding: 11px 10px;
-    margin-top: 8px;
-    margin-right: 16px;
-    background: burlywood;
-    font-size: 160x;
-    border: none;
-    cursor: pointer;
+  float: right;
+  padding: 11px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: burlywood;
+  font-size: 160x;
+  border: none;
+  cursor: pointer;
 }
 
-.btn:hover {    
-    background-color: rgb(156, 130, 96);;
-    transform: scale(1.1);
+.btn:hover {
+  background-color: rgb(156, 130, 96);
+  transform: scale(1.1);
 }

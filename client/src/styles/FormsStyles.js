@@ -217,6 +217,7 @@ const ButtonNavBar = styled.button`
 
 const DivInicio = styled.div`
   display: flex;
+  justify-content: flex-start;
 `;
 
 const InputSearchBar = styled.input`

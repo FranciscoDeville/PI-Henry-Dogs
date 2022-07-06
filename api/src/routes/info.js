@@ -2,6 +2,7 @@ const axios = require("axios");
 const { api_key } = process.env;
 const { Dog, Temperament } = require("../db");
 
+
 const getApiInfo = async () => {
   const apiUrl = await axios.get(
     `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`

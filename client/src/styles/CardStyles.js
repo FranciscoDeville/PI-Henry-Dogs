@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const CardWrapper = styled.div`
-  background-color: #EFC074;
+  background-color: #efc074;
   overflow: hidden;
   padding: 0 0 32px;
   margin: 48px auto 0;
@@ -17,7 +17,8 @@ export const CardHeader = styled.header`
 `;
 
 export const CardHeading = styled.h1`
-  font-size: 24px;
+  color: #4f772d;
+  font-size: 22px;
   font-weight: bold;
   text-align: center;
 `;
@@ -47,6 +48,7 @@ export const CardFieldset = styled.fieldset`
 `;
 
 export const CardOptionsNote = styled.small`
+  color: #4f772d;
   padding-top: 8px;
   display: block;
   width: 100%;
@@ -56,4 +58,5 @@ export const CardOptionsNote = styled.small`
 `;
 
 export const CardImage = styled.img`
-    width: 250px;`
+  width: 250px;
+`;

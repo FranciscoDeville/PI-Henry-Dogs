@@ -40,12 +40,6 @@ router.post("/post", async (req, res, next) => {
       });
       let temperamentDb = await Temperament.findAll({where: {name: temperament}})
       dogCreated.addTemperament(temperamentDb)
-      /* for (let i = 0; i < temperament.length; i++) {
-        const temp = await Temperament.findOne({
-            where: {name: temperament[i]}
-        })
-        dogCreate.addTemperament(temp)
-      } */
       res.status(200).json(dogCreated);
     } catch (error) {
       next(error);

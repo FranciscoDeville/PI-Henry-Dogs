@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getClean, getDetail } from "../actions";
-import { ButtonInicio } from "../styles/FormsStyles";
+import { ButtonInicio, DivInicio } from "../styles/FormsStyles";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -18,10 +18,11 @@ export default function Detail() {
 
   return (
     <div>
-      
-      <Link to="/home">
-        <ButtonInicio>Home</ButtonInicio>
-      </Link>
+      <DivInicio>
+        <Link to="/home">
+          <ButtonInicio>Home</ButtonInicio>
+        </Link>
+      </DivInicio>
 
       {dogDetail ? (
         <div>

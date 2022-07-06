@@ -13,7 +13,7 @@ import Card from "./Card";
 import { Link } from "react-router-dom";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
-import style from '../styles/Home.module.css'
+import style from "../styles/Home.module.css";
 import NavBar from "./NavBar";
 import { ButtonInicio } from "../styles/FormsStyles";
 
@@ -75,11 +75,10 @@ export default function Home() {
 
   return (
     <div className={style.conteiner}>
-        <NavBar />
+      <NavBar />
       <div className={style.title}>
-        <h1>Aguante los perritos</h1>
-        <ButtonInicio 
-          
+        {<h1>Dogs Breeds</h1>}
+        <ButtonInicio
           onClick={(e) => {
             handleClick(e);
           }}
@@ -95,7 +94,10 @@ export default function Home() {
           <option value="name_asc">A - Z</option>
           <option value="name_desc">Z - A</option>
         </select>
-        <select className={style.select} onChange={(e) => handleOrderByWeight(e)}>
+        <select
+          className={style.select}
+          onChange={(e) => handleOrderByWeight(e)}
+        >
           <option selected disabled hidden>
             Order by weight
           </option>
@@ -104,7 +106,10 @@ export default function Home() {
         </select>
       </div>
       <div className={style.filter}>
-        <select className={style.select} onChange={(e) => handleFilterCreated(e)}>
+        <select
+          className={style.select}
+          onChange={(e) => handleFilterCreated(e)}
+        >
           <option selected disabled hidden>
             Filter by create
           </option>
@@ -112,7 +117,10 @@ export default function Home() {
           <option value="created">Created</option>
           <option value="api">Api</option>
         </select>
-        <select className={style.select} onChange={(e) => handleFilterByTemperament(e)}>
+        <select
+          className={style.select}
+          onChange={(e) => handleFilterByTemperament(e)}
+        >
           <option selected disabled hidden>
             Filter by temperament
           </option>
@@ -133,22 +141,24 @@ export default function Home() {
         />
       </div>
 
+      <div className={style.grid}>
       {currentDogs?.map((el) => {
         return (
-          <div className={style.card}>
-            <Link to={"/home/" + el.id}>
-              <Card
-                name={el.name}
-                temperament={el.temperament}
-                weight_min={el.weight_min}
-                weight_max={el.weight_max}
-                image={el.image}
-                key={el.id}
-              />
-            </Link>
-          </div>
+            <div className={style.card}>
+              <Link to={"/home/" + el.id}>
+                <Card
+                  name={el.name}
+                  temperament={el.temperament}
+                  weight_min={el.weight_min}
+                  weight_max={el.weight_max}
+                  image={el.image}
+                  key={el.id}
+                />
+              </Link>
+            </div>
         );
       })}
+      </div>
     </div>
   );
 }

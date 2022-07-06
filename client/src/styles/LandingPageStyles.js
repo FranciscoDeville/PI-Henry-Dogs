@@ -14,4 +14,18 @@ const Body = styled.body`
   align-items: center;
 `;
 
-export { Body };
+const H1 = styled.h1`
+  font-size: 55px;
+  background-color: #b1a7a6;
+  border-radius: 5px;
+  color: black;
+  padding: 0px 15px;
+  `
+
+const Hr = styled.hr`
+  
+  width: 670px;
+  margin-top: 0px;
+  margin-bottom: 100px;`
+
+export { Body, H1, Hr };

@@ -141,8 +141,7 @@ const ImageDog = styled.img`
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 250px;
-  
+  width: 200px;
 
   &:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
@@ -165,7 +164,7 @@ const Ul = styled.ul`
 
 const ButtonTemperaments = styled.button`
   width: 30%;
-  background-color: rgb(18, 137, 153);
+  background-color: #b1a7a6;
   color: white;
   padding: 10px;
   margin: 5px;
@@ -182,7 +181,7 @@ const ButtonTemperaments = styled.button`
 `;
 
 const ButtonInicio = styled.button`
-  background-color: rgb(18, 137, 153);
+  background-color: #b1a7a6;
   color: white;
   padding: 10px;
   margin: 5px;
@@ -236,6 +235,14 @@ const InputSearchBar = styled.input`
   }
 `;
 
+const MainConteiner = styled.main`
+  background: #eae2b7;
+  max-width: 800px;
+  width: 90%;
+  margin: auto;
+  padding: 40px;
+`;
+
 export {
   Form,
   Label,
@@ -254,5 +261,6 @@ export {
   ButtonInicio,
   DivInicio,
   ButtonNavBar,
-  InputSearchBar
+  InputSearchBar,
+  MainConteiner,
 };

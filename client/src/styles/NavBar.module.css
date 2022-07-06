@@ -1,10 +1,10 @@
-.navbar {
-  background-color: gainsboro;
+/* .navbar {
+  background-color: rgb(247, 23, 23);
   height: 100%;
   width: 100%;
   display: flex;
   align-content: center;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   justify-items: center;
 }
@@ -16,6 +16,33 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+
+.img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+ */
+
+ .navbar {
+  background-color: #DDA350;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center; 
+}
+
+.text {
+  color: #6C4815; /* 90601C */
+}
+.text:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+
 
 .img:hover {
   transform: scale(1.1);

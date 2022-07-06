@@ -11,17 +11,15 @@ import {
   Button,
   SuccessMessage,
   ImageDog,
-  ReadingError,
   Ul,
   ButtonTemperaments,
   Select,
   ButtonInicio,
   DivInicio,
+  MainConteiner,
 } from "../styles/FormsStyles";
 import Input from "./Input";
-import NavBar from "./NavBar";
-import ImageDefault from '../styles/images/Bingo_and_Rolly_of_Puppy_Dog_Pals_1.jpg'
-
+import ImageDefault from "../styles/images/Bingo_and_Rolly_of_Puppy_Dog_Pals_1.jpg";
 
 export default function CreateDog() {
   //------------------------------------------------------------------------------------------------------------------------
@@ -123,13 +121,13 @@ export default function CreateDog() {
   }
 
   return (
-    <main>
-    <DivInicio>
-      <Link to='/home'>
-        <ButtonInicio >Inicio</ButtonInicio>
-      </Link>
-    </DivInicio>
-      <ImageDog src={image.field ? image.field : ImageDefault} alt=""/>
+    <MainConteiner>
+      <DivInicio>
+        <Link to="/home">
+          <ButtonInicio>Home</ButtonInicio>
+        </Link>
+      </DivInicio>
+      <ImageDog src={image.field ? image.field : ImageDefault} alt="" />
       <Form action="" onSubmit={handleSubmit}>
         <Input
           state={name}
@@ -273,7 +271,7 @@ export default function CreateDog() {
           )}
         </CenteredButtonContainer>
       </Form>
-    </main>
+    </MainConteiner>
   );
 }
 

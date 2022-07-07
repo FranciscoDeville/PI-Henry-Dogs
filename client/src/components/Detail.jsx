@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getClean, getDetail } from "../actions";
 import { ButtonInicio, DivInicio } from "../styles/FormsStyles";
+import style from "../styles/Detail.module.css";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function Detail() {
       </DivInicio>
 
       {dogDetail ? (
-        <div>
+        <div className={style.conteiner}>
           <h1>Nombre: {dogDetail.name}</h1>
           <img
             src={dogDetail.img ? dogDetail.img : dogDetail.image}

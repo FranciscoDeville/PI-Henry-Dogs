@@ -103,6 +103,14 @@ export default function CreateDog() {
       }
     } else {
       setFormValid("false");
+      // Seteo el estado para que se remarque el input erroneo en rojo
+      if(name.valid !== 'true') setName({valid: "false"})
+      if(height_min.valid !== 'true') setHeight_min({valid: "false"})
+      if(height_max.valid !== 'true') setHeight_max({valid: "false"})
+      if(weight_min.valid !== 'true') setWeight_min({valid: "false"})
+      if(weight_max.valid !== 'true') setWeight_max({valid: "false"})
+      if(life_span_min.valid !== 'true') setLife_span_min({valid: "false"})
+      if(life_span_max.valid !== 'true') setLife_span_max({valid: "false"})
     }
   }
 

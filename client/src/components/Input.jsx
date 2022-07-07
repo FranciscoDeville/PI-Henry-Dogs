@@ -5,13 +5,14 @@ export default function ComponentInput({
   state,
   setState,
   type,
+  min,
+  max,
   label,
   placeholder,
   name,
   errormessage,
   regularPhrase,
 }) {
-  
   function handleOnChange(e) {
     setState({ ...state, field: e.target.value });
   }
@@ -34,6 +35,8 @@ export default function ComponentInput({
       <GroupInput>
         <Input
           type={type}
+          min={min}
+          max={max}
           placeholder={placeholder}
           id={name}
           value={state.field}
@@ -47,4 +50,3 @@ export default function ComponentInput({
     </div>
   );
 }
-

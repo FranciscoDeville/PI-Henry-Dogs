@@ -59,10 +59,10 @@ export default function CreateDog() {
     e.preventDefault();
     // Valido que esten todos los campos correctos
     if (
+      temperament.field.length > 0 &&
       height_max.field > height_min.field &&
       weight_max.field > weight_min.field &&
-      life_span_max.field > life_span_min.field &&
-      temperament.field.length > 0
+      life_span_max.field > life_span_min.field
     ) {
       if (
         name.valid === "true" &&
@@ -101,7 +101,6 @@ export default function CreateDog() {
         alert("Dog created successfully!");
         history.push("/home");
       }
-      // ...
     } else {
       setFormValid("false");
     }
@@ -127,7 +126,10 @@ export default function CreateDog() {
           <ButtonInicio>Home</ButtonInicio>
         </Link>
       </DivInicio>
-      <ImageDog src={image.field ? image.field : ImageDefault} alt="Image not found" />
+      <ImageDog
+        src={image.field ? image.field : ImageDefault}
+        alt="Image not found"
+      />
       <Form action="" onSubmit={handleSubmit}>
         <Input
           state={name}
@@ -153,6 +155,8 @@ export default function CreateDog() {
           state={height_min}
           setState={setHeight_min}
           type="number"
+          min="1"
+          max="100"
           label="Minimun height"
           placeholder="Minimun height(Centimeters)..."
           name="height_min"
@@ -163,6 +167,8 @@ export default function CreateDog() {
           state={height_max}
           setState={setHeight_max}
           type="number"
+          min="1"
+          max="100"
           label="Maximum height"
           placeholder="Maximum height(Centimeters)..."
           name="height_max"
@@ -173,6 +179,8 @@ export default function CreateDog() {
           state={weight_min}
           setState={setWeight_min}
           type="number"
+          min="1"
+          max="100"
           label="Minimun weight"
           placeholder="Minimun weight(Kilograms)..."
           name="weight_min"
@@ -183,6 +191,8 @@ export default function CreateDog() {
           state={weight_max}
           setState={setWeight_max}
           type="number"
+          min="1"
+          max="100"
           label="Maximum weight"
           placeholder="Maximum weight(Kilograms)..."
           name="weight_max"
@@ -193,6 +203,8 @@ export default function CreateDog() {
           state={life_span_min}
           setState={setLife_span_min}
           type="number"
+          min="1"
+          max="100"
           label="Minimum life expectancy"
           placeholder="Minimum life expectancy(years)..."
           name="life_span_min"
@@ -203,6 +215,8 @@ export default function CreateDog() {
           state={life_span_max}
           setState={setLife_span_max}
           type="number"
+          min="1"
+          max="100"
           label="Maximum life expectancy"
           placeholder="Maximum life expectancy(years)..."
           name="life_span_max"
@@ -212,7 +226,7 @@ export default function CreateDog() {
         <div>
           <Label>Temperaments:</Label>
           <Ul>
-            <li key={"key"}>
+            <li>
               {temperament.field.map((el) => (
                 <ButtonTemperaments
                   type="button"
@@ -242,6 +256,7 @@ export default function CreateDog() {
             </p>
           </ErrorMessage>
         )}
+
         <CenteredButtonContainer>
           <Button type="submit">Send</Button>
           {formValid === "true" && (
@@ -251,157 +266,4 @@ export default function CreateDog() {
       </Form>
     </MainConteiner>
   );
-}
-
-{
-  /* const [usuario, cambiarUsuario] = useState({campo: '', valido: null});
-	const [nombre, cambiarNombre] = useState({campo: '', valido: null});
-	const [password, cambiarPassword] = useState({campo: '', valido: null});
-	const [password2, cambiarPassword2] = useState({campo: '', valido: null});
-	const [correo, cambiarCorreo] = useState({campo: '', valido: null});
-	const [telefono, cambiarTelefono] = useState({campo: '', valido: null});
-	const [terminos, cambiarTerminos] = useState(false);
-	const [formularioValido, cambiarFormularioValido] = useState(null);
-
-	const expresiones = {
-		usuario: /^[a-zA-Z0-9_-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-		nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-		password: /^.{4,12}$/, // 4 a 12 digitos.
-		correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-		telefono: /^\d{7,14}$/ // 7 a 14 numeros.
-	}
-
-	const validarPassword2 = () => {
-		if(password.campo.length > 0){
-			if(password.campo !== password2.campo){
-				cambiarPassword2((prevState) => {
-					return {...prevState, valido: 'false'}
-				});
-			} else {
-				cambiarPassword2((prevState) => {
-					return {...prevState, valido: 'true'}
-				});
-			}
-		}
-	}
-
-	const onChangeTerminos = (e) => {
-		cambiarTerminos(e.target.checked);
-	}
-
-	const onSubmit = (e) => {
-		e.preventDefault();
-
-		if(
-			usuario.valido === 'true' &&
-			nombre.valido === 'true' &&
-			password.valido === 'true' &&
-			password2.valido === 'true' &&
-			correo.valido === 'true' &&
-			telefono.valido === 'true' &&
-			terminos
-		){
-			cambiarFormularioValido(true);
-			cambiarUsuario({campo: '', valido: ''});
-			cambiarNombre({campo: '', valido: null});
-			cambiarPassword({campo: '', valido: null});
-			cambiarPassword2({campo: '', valido: 'null'});
-			cambiarCorreo({campo: '', valido: null});
-			cambiarTelefono({campo: '', valido: null});
-
-			// ... 
-		} else {
-			cambiarFormularioValido(false);
-		}
-	}
-
-	return (
-		<main>
-			<Formulario action="" onSubmit={onSubmit}>
-				<Input
-					estado={usuario}
-					cambiarEstado={cambiarUsuario}
-					tipo="text"
-					label="Usuario"
-					placeholder="john123"
-					name="usuario"
-					leyendaError="El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo."
-					expresionRegular={expresiones.usuario}
-				/>
-				<Input
-					estado={nombre}
-					cambiarEstado={cambiarNombre}
-					tipo="text"
-					label="Nombre"
-					placeholder="John Doe"
-					name="usuario"
-					leyendaError="El nombre solo puede contener letras y espacios."
-					expresionRegular={expresiones.nombre}
-				/>
-				<Input
-					estado={password}
-					cambiarEstado={cambiarPassword}
-					tipo="password"
-					label="Contraseña"
-					name="password1"
-					leyendaError="La contraseña tiene que ser de 4 a 12 dígitos."
-					expresionRegular={expresiones.password}
-				/>
-				<Input
-					estado={password2}
-					cambiarEstado={cambiarPassword2}
-					tipo="password"
-					label="Repetir Contraseña"
-					name="password2"
-					leyendaError="Ambas contraseñas deben ser iguales."
-					funcion={validarPassword2}
-				/>
-				<Input
-					estado={correo}
-					cambiarEstado={cambiarCorreo}
-					tipo="email"
-					label="Correo Electrónico"
-					placeholder="john@correo.com"
-					name="correo"
-					leyendaError="El correo solo puede contener letras, numeros, puntos, guiones y guion bajo."
-					expresionRegular={expresiones.correo}
-				/>
-				<Input
-					estado={telefono}
-					cambiarEstado={cambiarTelefono}
-					tipo="text"
-					label="Teléfono"
-					placeholder="4491234567"
-					name="telefono"
-					leyendaError="El telefono solo puede contener numeros y el maximo son 14 dígitos."
-					expresionRegular={expresiones.telefono}
-				/>
-
-
-
-				<ContenedorTerminos>
-					<Label>
-						<input 
-							type="checkbox"
-							name="terminos"
-							id="terminos"
-							checked={terminos} 
-							onChange={onChangeTerminos}
-						/>
-						Acepto los Terminos y Condiciones
-					</Label>
-				</ContenedorTerminos>
-				{formularioValido === false && <MensajeError>
-					<p>
-						<FontAwesomeIcon icon={faExclamationTriangle}/>
-						<b>Error:</b> Por favor rellena el formulario correctamente.
-					</p>
-				</MensajeError>}
-				<ContenedorBotonCentrado>
-					<Boton type="submit">Enviar</Boton>
-					{formularioValido === true && <MensajeExito>Formulario enviado exitosamente!</MensajeExito>}
-				</ContenedorBotonCentrado>
-			</Formulario>
-		</main>
-	); */
 }

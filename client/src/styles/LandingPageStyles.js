@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Fondo from "./images/LandingPage.jpg";
 
 const Body = styled.body`
@@ -22,10 +22,4 @@ const H1 = styled.h1`
   padding: 0px 15px;
   `
 
-const Hr = styled.hr`
-  
-  width: 670px;
-  margin-top: 0px;
-  margin-bottom: 100px;`
-
-export { Body, H1, Hr };
+export { Body, H1 };

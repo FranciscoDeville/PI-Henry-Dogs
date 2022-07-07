@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  CardWrapper,
+  CardConteiner,
   CardHeader,
   CardHeading,
   CardBody,
   CardFieldset,
-  CardOptionsNote,
+  CardNote,
   CardImage,
 } from "../styles/CardStyles";
 export default function Card({
@@ -16,20 +16,19 @@ export default function Card({
   image,
 }) {
   return (
-    <CardWrapper>
+    <CardConteiner>
       <CardHeader>
         <CardHeading>{name}</CardHeading>
       </CardHeader>
-
       <CardBody>
         <CardImage src={image} alt="Image not found" />
         <CardFieldset>
-          <CardOptionsNote>
+          <CardNote>
             Weight: {weight_min} - {weight_max} kilograms
-          </CardOptionsNote>
-          <CardOptionsNote>Temperaments: {temperament}</CardOptionsNote>
+          </CardNote>
+          <CardNote>Temperaments: {temperament}</CardNote>
         </CardFieldset>
       </CardBody>
-    </CardWrapper>
+    </CardConteiner>
   );
 }

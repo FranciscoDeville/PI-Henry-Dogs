@@ -2,9 +2,10 @@ import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Home from "./components/Home";
-import CreateDog from './components/CreateDog'
-import Detail from './components/Detail'
+import CreateDog from "./components/CreateDog";
+import Detail from "./components/Detail";
 import About from "./components/About";
+import Error from "./components/Error";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/create_dog" component={CreateDog} />
           <Route exact path="/home/:id" component={Detail} />
           <Route exact path="/about" component={About} />
+          <Route path="*" component={Error}/>
         </Switch>
       </div>
     </BrowserRouter>
